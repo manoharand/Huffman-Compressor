@@ -6,7 +6,7 @@ public class Decompressor {
   private ArrayList<Character> readList = new ArrayList<Character>();
   private HuffmanNode[] readArray = new HuffmanNode[128];
 
-  public void ReadFile(inputFileName) {
+  public void readFile(inputFileName) {
     BufferedReader br = new BufferedReader();
     try {
       while ((x = br.read()) != -1) {
