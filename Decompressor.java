@@ -14,7 +14,7 @@ public class Decompressor extends HuffmanCompressor {
   private ArrayList<Character> writeList = new ArrayList<Character>();
   /** the Huffman Tree */
   private ArrayList<HuffmanNode> nodeList = new ArrayList<HuffmanNode>();
-  /** list containing HuffmanNodes with characters and their corresponding frequencies */
+  /** list containing HuffmanNodes with characters and their corresponding frequencies; size based on total UTF-8 characters */
   private HuffmanNode[] readArray = new HuffmanNode[1112064];
 
   /**
@@ -62,14 +62,13 @@ public class Decompressor extends HuffmanCompressor {
     * Decode the barcode appended to the front of the DNA.
     */
   public void decodeBarcode() {
-    /** Read the first frequency in the barcode, indicating the size of the readArray. */
     int size = readBases();
     for (int i = 0; i < size; i++) {
       readArray[i] = new HuffmanNode((char)i, readBases(), null, null, null, null);
     }
     /** Start creating the tree. */
     for (HuffmanNode n : readArray) {
-      if (n.getFrequency() != 0)
+      if (n != null && n.getFrequency() != 0)
         nodeList.add(n);
     }
     /** Sort the ArrayList based on frequency of each character. */
