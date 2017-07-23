@@ -117,20 +117,25 @@ public class HuffmanCompressor {
     * ArrayList containing nodes that represent unique characters from the inputted file with their corresponding frequencies
     */
   public void createTree() {
+		while (readList.size() % 3 != 1) 
+			readList.add(new HuffmanNode(null, 0, null, null, null, null));
+		Collections.sort(readList, new Comparator<HuffmanNode>() {
+      @Override
+      public int compare(HuffmanNode h1, HuffmanNode h2) {
+        return (h1.compareTo(h2));
+      }
+    });
     this.size = readList.size();
-    for (int i = 0; readList.size() > 4; i++) {
-        mergeNodes();
-        /** Sort the ArrayList based on the frequency of each character. */
-        Collections.sort(readList, new Comparator<HuffmanNode>() {
+    for (int i = 0; readList.size() > 1; i++) {
+      mergeNodes();
+      /** Sort the ArrayList based on the frequency of each character. */
+      Collections.sort(readList, new Comparator<HuffmanNode>() {
         @Override
         public int compare(HuffmanNode h1, HuffmanNode h2) {
           return (h1.compareTo(h2));
         }
       });
     }
-    while (readList.size() % 4 != 0)
-      readList.add(new HuffmanNode(null, 0, null, null, null, null));
-    mergeNodes();
     this.rt = readList.get(0);
   }
 
