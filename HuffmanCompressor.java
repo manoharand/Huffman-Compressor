@@ -117,6 +117,7 @@ public class HuffmanCompressor {
     * ArrayList containing nodes that represent unique characters from the inputted file with their corresponding frequencies
     */
   public void createTree() {
+		/** Add empty HuffmanNodes so that the merge() method never tries to merge anything but four nodes. */
 		while (readList.size() % 3 != 1) 
 			readList.add(new HuffmanNode(null, 0, null, null, null, null));
 		Collections.sort(readList, new Comparator<HuffmanNode>() {
