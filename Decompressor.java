@@ -109,20 +109,26 @@ public class Decompressor extends HuffmanCompressor {
   /**
     * Create a HuffmanTree by merging the four lowest-frequency HuffmanNodes in the ArrayList containing nodes that represent unique characters from the inputted file with their corresponding frequencies
     */
-  @Override
-  public void createTree() {
-    for (int i = 0; nodeList.size() > 4; i++) {
-    	mergeNodes();
+  
+   public void createTree() {
+		while (nodeList.size() % 3 != 1) 
+			nodeList.add(new HuffmanNode(null, 0, null, null, null, null));
+		Collections.sort(nodeList, new Comparator<HuffmanNode>() {
+      @Override
+      public int compare(HuffmanNode h1, HuffmanNode h2) {
+        return (h1.compareTo(h2));
+      }
+    });
+    for (int i = 0; nodeList.size() > 1; i++) {
+      mergeNodes();
+      /** Sort the ArrayList based on the frequency of each character. */
       Collections.sort(nodeList, new Comparator<HuffmanNode>() {
         @Override
         public int compare(HuffmanNode h1, HuffmanNode h2) {
           return (h1.compareTo(h2));
         }
       });
-    }
-    while (nodeList.size() % 4 != 0)
-      nodeList.add(new HuffmanNode(null, 0, null, null, null, null));
-    mergeNodes();
+    }		
   }
 
   /**
@@ -158,7 +164,7 @@ public class Decompressor extends HuffmanCompressor {
         root = root.four;
         readList.remove(0);
       }
-      if (isLeaf(root)) {
+      else if (isLeaf(root)) {
         /** Add the leaf node to the tree */
         writeList.add(root.getChar());
         root = nodeList.get(0);
@@ -173,8 +179,9 @@ public class Decompressor extends HuffmanCompressor {
 	public void writeToFile(String outputFileName) {
 		try {
 		BufferedWriter bw = new BufferedWriter(new FileWriter(outputFileName));
-			for (Character x : writeList)
+      for (Character x : writeList) {
 				bw.write(x);
+			}
     bw.close();
     }
 		catch (IOException e) {}
